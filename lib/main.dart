@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'homepage.dart';
 
-void main(List<String> args) {
+void main(List<String> args) async {
+  await Hive.initFlutter();
+  var box = await Hive.openBox('Mybox');
   runApp(new app());
 }
 
 class app extends StatefulWidget {
-  const app({Key? key}) : super(key: key);
-
   @override
   State<app> createState() => _appState();
 }

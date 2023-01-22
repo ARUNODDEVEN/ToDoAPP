@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:hive/hive.dart';
+import 'package:todolist/data/database.dart';
 import 'package:todolist/dialogue.dart';
 import 'package:todolist/todolist.dart';
 
@@ -11,22 +13,39 @@ class homepage extends StatefulWidget {
 }
 
 class _homepageState extends State<homepage> {
-  final _controller = TextEditingController();
-  List todolistt = [
+  @override
+
+  final _mybox = Hive.box('mybox');
+  void initState() {
+    if (_mybox.get("TODOLIST") == null) {
+      db.createinitaldata();
+    } else {
+      db.loaddata();
+    }
+    // TODO: implement initState
+    super.initState();
+  }
+
   
-  ];
+
+  final _controller = TextEditingController();
+  // List todolistt = [];
+
+  Tododatabase db = Tododatabase();
   void checkboxchanged(bool? value, int index) {
     setState(() {
-      todolistt[index][1] = !todolistt[index][1];
+      db.todolistt[index][1] = !db.todolistt[index][1];
     });
+    db.updatedatabase();
   }
 
   void savenewtask() {
     setState(() {
-      todolistt.add([_controller.text, false]);
+      db.todolistt.add([_controller.text, false]);
     });
     Navigator.of(context).pop();
     _controller.clear();
+    db.updatedatabase();
   }
 
   void createnewtask() {
@@ -40,33 +59,35 @@ class _homepageState extends State<homepage> {
         );
       },
     );
+    db.updatedatabase();
   }
 
   void deletetask(int index) {
     setState(() {
-      todolistt.removeAt(index);
+      db.todolistt.removeAt(index);
     });
+    db.updatedatabase();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         centerTitle: true,
         title: Text("To Do"),
-        elevation: 0,
+        elevation: 5,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: createnewtask,
         child: Icon(Icons.add),
       ),
       body: ListView.builder(
-        itemCount: todolistt.length,
+        itemCount: db.todolistt.length,
         itemBuilder: (context, index) {
           return todolist(
-            taskcomplete: todolistt[index][1],
-            taskname: todolistt[index][0],
+            taskcomplete: db.todolistt[index][1],
+            taskname: db.todolistt[index][0],
             onchanged: (value) => checkboxchanged(value, index),
             deletetask: (p0) => deletetask(index),
           );
