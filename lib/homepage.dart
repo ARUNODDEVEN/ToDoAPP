@@ -72,17 +72,26 @@ class _homepageState extends State<homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
+      
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("To Do"),
-        elevation: 5,
-      ),
+      
+       
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title: Text("To Do"),
+      //   elevation: 5,
+      // ),
+      
       floatingActionButton: FloatingActionButton(
         onPressed: createnewtask,
         child: Icon(Icons.add),
       ),
-      body: ListView.builder(
+      body: 
+      
+      
+      
+      ListView.builder(
         itemCount: db.todolistt.length,
         itemBuilder: (context, index) {
           return todolist(
