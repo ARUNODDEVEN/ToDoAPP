@@ -6,13 +6,13 @@ class dialguebox extends StatelessWidget {
   VoidCallback onSave;
   VoidCallback onCancel;
   
-      dialguebox({
-      super.key,
+
+  dialguebox(
+      {super.key,
       required this.controller,
+    
       required this.onSave,
-      required this.onCancel
-      }
-      );
+      required this.onCancel});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class dialguebox extends StatelessWidget {
               children: [
                 button(text: "Save", onPressed: onSave),
                 const SizedBox(width: 8),
-                button(text: "Cancel", onPressed:onCancel)
+                button(text: "Cancel", onPressed: onCancel)
               ],
             ),
           ],
